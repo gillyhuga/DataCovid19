@@ -47,14 +47,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-           
+
         //Overriding dan Overloading
         Notification jud = new Notification();
         jud.dev("Aplikasi Covid-19");
         jud.dev("Dibuat :", "Gilly");
         jud.nim();
         jud.tugas();
-       
 
         stage.setTitle("Covid-19");
         GridPane grid = new GridPane();
@@ -181,7 +180,7 @@ public class Main extends Application {
         final TextField addKota = new TextField();
         addKota.setPromptText("Masukkan Kota");
         grid.add(addKota, 1, 4);
-        
+
         //Label Alamat
         Label labelAlamat = new Label("Alamat");
         grid.add(labelAlamat, 0, 3);
@@ -190,7 +189,6 @@ public class Main extends Application {
         final TextField addAlamat = new TextField();
         addAlamat.setPromptText("Masukkan Alamat");
         grid.add(addAlamat, 1, 3);
-        
 
         //Radio Button Kelamin
         FlowPane flowPaneRadioButton = new FlowPane();
@@ -220,19 +218,19 @@ public class Main extends Application {
         Button delButton = new Button("Delete");
         delButton.setPrefSize(70, 25);
         hbBtn.getChildren().addAll(addButton, delButton);
-        
+
         delButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 //exception
-                    try {
-                        int selectedIndex = table.getSelectionModel().getSelectedIndex();
-                        table.getItems().remove(selectedIndex);
-                        PushNotif push = new PushNotif();
-                        push.suara();;
-                    } catch (Exception r) {
-                        System.err.println("\nPilih baris yang ingin di hapus");
-                    }
+                try {
+                    int selectedIndex = table.getSelectionModel().getSelectedIndex();
+                    table.getItems().remove(selectedIndex);
+                    PushNotif push = new PushNotif();
+                    push.suara();;
+                } catch (Exception r) {
+                    System.err.println("\nPilih baris yang ingin di hapus");
+                }
             }
         });
 
@@ -312,7 +310,7 @@ public class Main extends Application {
         public void setKelamin(String nomerNIK) {
             kelamin.set(nomerNIK);
         }
-        
+
         public String getKota() {
             return kota.get();
         }
@@ -320,7 +318,7 @@ public class Main extends Application {
         public void setKota(String nomerNIK) {
             kota.set(nomerNIK);
         }
-        
+
         public String getAlamat() {
             return alamat.get();
         }
