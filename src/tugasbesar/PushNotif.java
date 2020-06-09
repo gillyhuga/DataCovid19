@@ -11,12 +11,11 @@ package tugasbesar;
  */
 //subclass
 public class PushNotif extends Notification {
-    public void Tugas() {
-        super.tugas();
+    
+    public void hapusGagal() {
+        super.hapusGagal();
     }
-    public void Nim() {
-        super.nim();
-    }
+    
     //Inheritance
     public void suara() {
         System.out.println("\nData Berhasil di Hapus");

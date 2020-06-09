@@ -31,6 +31,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
 
 public class Main extends Application {
 
@@ -47,13 +48,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
-        //Overriding dan Overloading
-        Notification jud = new Notification();
-        jud.dev("Aplikasi Covid-19");
-        jud.dev("Dibuat :", "Gilly");
-        jud.nim();
-        jud.tugas();
 
         stage.setTitle("Covid-19");
         GridPane grid = new GridPane();
@@ -77,12 +71,12 @@ public class Main extends Application {
         TableColumn nikCol = new TableColumn("NIK");
         nikCol.setMinWidth(150);
         nikCol.setCellValueFactory(
-                new PropertyValueFactory<Person, String>("nik"));
-        nikCol.setCellFactory(TextFieldTableCell.forTableColumn());
+                new PropertyValueFactory<Person, Integer>("nik"));
+        nikCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         nikCol.setOnEditCommit(
-                new EventHandler<CellEditEvent<Person, String>>() {
+                new EventHandler<CellEditEvent<Person, Integer>>() {
                     @Override
-                    public void handle(CellEditEvent<Person, String> t) {
+                    public void handle(CellEditEvent<Person, Integer> t) {
                         ((Person) t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())).setNik(t.getNewValue());
                     }
@@ -149,6 +143,7 @@ public class Main extends Application {
                     }
                 }
         );
+
         //Tabel
         table.setItems(data);
         table.getColumns().addAll(nikCol, namaCol, kelaminCol, kotaCol, alamatCol);
@@ -227,9 +222,12 @@ public class Main extends Application {
                     int selectedIndex = table.getSelectionModel().getSelectedIndex();
                     table.getItems().remove(selectedIndex);
                     PushNotif push = new PushNotif();
-                    push.suara();;
+                    push.suara();
                 } catch (Exception r) {
-                    System.err.println("\nPilih baris yang ingin di hapus");
+                    Notification gagal = new Notification();
+                    gagal.hapusGagal();
+                    
+                    System.err.println("Pilih baris yang ingin di hapus");
                 }
             }
         });
@@ -238,48 +236,54 @@ public class Main extends Application {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                //Exception
+                try {
+                    String kelamin = "";
+                    if (radioL.isSelected()) {
+                        kelamin = "Laki-Laki";
+                    } else if (radioP.isSelected()) {
+                        kelamin = "Perempuan";
+                    }
 
-                String kelamin = "";
-                if (radioL.isSelected()) {
-                    kelamin = "Laki-Laki";
-                } else if (radioP.isSelected()) {
-                    kelamin = "Perempuan";
+                    data.add(new Person(
+                            Integer.parseInt(addNik.getText()),
+                            addNama.getText(),
+                            kelamin,
+                            addKota.getText(),
+                            addAlamat.getText()));
+                    addNik.clear();
+                    addNama.clear();
+                    addAlamat.clear();
+                    addKota.clear();
+                    radioL.setSelected(false);
+                    radioP.setSelected(false);
+
+                    //Inheritance 
+                    Notification jud = new Notification();
+                    jud.suara();
+                } catch (NumberFormatException r) {
+                    Notification gagal = new Notification();
+                    gagal.inputGagal("\nData Gagal", "Input");
+
+                    System.err.println("Masukkan NIK menggunakan angka");
                 }
-
-                data.add(new Person(
-                        addNik.getText(),
-                        addNama.getText(),
-                        kelamin,
-                        addKota.getText(),
-                        addAlamat.getText()));
-                addNik.clear();
-                addNama.clear();
-                addAlamat.clear();
-                addKota.clear();
-                radioL.setSelected(false);
-                radioP.setSelected(false);
-
-                //Inheritance 
-                Notification jud = new Notification();
-                jud.suara();
             }
         });
 
         stage.setScene(scene);
         stage.show();
     }
-    // Class Person
-
+    
     public class Person {
 
-        private final SimpleStringProperty nik;
+        private final SimpleIntegerProperty nik;
         private final SimpleStringProperty nama;
         private final SimpleStringProperty kelamin;
         private final SimpleStringProperty kota;
         private final SimpleStringProperty alamat;
 
-        private Person(String nomerNIK, String nama, String kelamin, String kota, String alamat) {
-            this.nik = new SimpleStringProperty(nomerNIK);
+        private Person(Integer nomerNIK, String nama, String kelamin, String kota, String alamat) {
+            this.nik = new SimpleIntegerProperty(nomerNIK);
             this.nama = new SimpleStringProperty(nama);
             this.kelamin = new SimpleStringProperty(kelamin);
             this.kota = new SimpleStringProperty(kota);
@@ -287,11 +291,11 @@ public class Main extends Application {
         }
 
         // Getter Setter
-        public String getNik() {
+        public Integer getNik() {
             return nik.get();
         }
 
-        public void setNik(String nomerNIK) {
+        public void setNik(Integer nomerNIK) {
             nik.set(nomerNIK);
         }
 

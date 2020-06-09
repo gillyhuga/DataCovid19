@@ -9,20 +9,15 @@ package tugasbesar;
  *
  * @author User
  */
-//superclass
+
 public class Notification {
     //overriding
-    public void tugas() {
-        System.out.println("Tugas Besar PBO");
+    public void hapusGagal() {
+        System.out.println("\nData Gagal Hapus");
     }
-    public void nim() {
-        System.out.println("NIM : 201910370311336");
-    }
+    
     //overloading
-    public void dev(String a) {
-        System.out.println(a);
-    }
-    public void dev(String a, String b) {
+    public void inputGagal(String a, String b) {
         System.out.println(a + " " + b);
     }
     //Inheritance   
