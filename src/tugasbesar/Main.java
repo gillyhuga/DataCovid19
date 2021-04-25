@@ -49,7 +49,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
 
-        stage.setTitle("Covid-19");
+        stage.setTitle("Data Covid-19");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
